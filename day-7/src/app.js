@@ -5,8 +5,8 @@ const app=express()
 
 app.use(express.json())
 
-// get req.body=> title,discription
-app.get("/notes",async(req,res)=>{
+// post  /notes  req.body=> title,discription
+app.post("/notes",async(req,res)=>{
 
     const {title,discription}=req.body
    const note= await noteModel.create({
@@ -17,6 +17,19 @@ app.get("/notes",async(req,res)=>{
         message:"note created successfuly",
         note
     })
+})
+
+//get /notes 
+//fetches the data
+
+app.get("/notes",async(req,res)=>{
+   const notes = await noteModel.find()
+    
+   res.status(200).json({
+    message:"notes fetched successuly",
+    notes
+   })
+ 
 })
 
 module.exports=app
