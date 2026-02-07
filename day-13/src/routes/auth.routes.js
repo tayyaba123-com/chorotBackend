@@ -1,7 +1,7 @@
 const express = require("express");
 const userModel = require("../model/users.model");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto")
+const crypto = require("crypto");
 
 const authRouter = express.Router();
 
@@ -17,11 +17,11 @@ authRouter.post("/register", async (req, res) => {
     });
   }
 
-  const hash = crypto.createHash("md5").update(password).digest("hex")
+  const hash = crypto.createHash("md5").update(password).digest("hex");
   const user = await userModel.create({
     name,
     email,
-    password:hash,
+    password: hash,
   });
 
   const token = jwt.sign(
@@ -62,7 +62,8 @@ authRouter.post("/login", async (req, res) => {
     });
   }
 
-  const isPasswordMatched = user.password === crypto.createHash("md5").update(password).digest("hex");
+  const isPasswordMatched =
+    user.password === crypto.createHash("md5").update(password).digest("hex");
 
   if (!isPasswordMatched) {
     return res.status(401).json({
@@ -82,6 +83,25 @@ authRouter.post("/login", async (req, res) => {
   res.status(200).json({
     message: "User Loged In",
     user,
+  });
+});
+
+//logout
+
+authRouter.post("/logout", async (req, res) => {
+  const token = req.cookies.jwt_token;
+  if (!token) {
+    return res.status(401).json({
+      message: "user is already logged out",
+    });
+  }
+
+  // const cookies = req.cookies;
+ 
+  res.clearCookie("jwt_token");
+
+  res.status(200).json({
+    message: "user loged out ",
   });
 });
 
