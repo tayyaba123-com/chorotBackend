@@ -1,5 +1,5 @@
 const express = require("express");
-const userModel = require("../models/users.model");
+const userModel = require("../model/users.model");
 const jwt = require("jsonwebtoken");
 
 const authRouter = express.Router();
@@ -7,15 +7,15 @@ const authRouter = express.Router();
 authRouter.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
-  const isUserAlredyExits = await userModel.findOne({ email });
+  
+  const isUserAlreadyPresent = await userModel.findOne({ email });
 
-  if (isUserAlredyExits) {
-    //null truthy
-
-    return res.status(400).json({
-      message: "Accout with this email already exits",
+   if (isUserAlreadyPresent) {
+    return res.status(409).json({
+      message: "User with this email is already present",
     });
   }
+
 
   const user = await userModel.create({
     name,
@@ -26,7 +26,7 @@ authRouter.post("/register", async (req, res) => {
   const token = jwt.sign(
     {
       id: user._id,
-      email: user.email, //not generally
+      email: user.email,
     },
     process.env.JWT_SECRET,
   );
@@ -34,10 +34,10 @@ authRouter.post("/register", async (req, res) => {
   res.cookie("jwt_token",token)
 
   res.status(201).json({
-    message: "user registered successfuly",
+    message:"User registered",
     user,
-    token,
-  });
+    token
+  })
 });
 
-module.exports = authRouter;
+module.exports = authRouter
