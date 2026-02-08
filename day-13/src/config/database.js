@@ -1,6 +1,5 @@
 const mongoose = require("mongoose")
 
-
 function connectToDB(){
     mongoose.connect(process.env.MONGO_URI)
     .then(()=>{
@@ -8,5 +7,4 @@ function connectToDB(){
     })
 }
 
-
-module.exports= connectToDB
+module.exports = connectToDB
