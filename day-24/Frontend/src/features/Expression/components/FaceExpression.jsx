@@ -29,23 +29,15 @@ export default function EmotionDetector() {
   
   return (
     <div className="webcame-container" >
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <div style={{ fontSize: '100px', transition: 'all 0.2s' }}>{output.emoji}</div>
-        <h1 style={{ fontSize: '30px', fontWeight: 'bold' ,color:'rgb(227, 222, 222)'}}>{output.label}</h1>
+      <div className="text-center " >
+        <div className="text-[100px]" style={{  transition: 'all 0.2s' }}>{output.emoji}</div>
+        <h1 className="text-3xl font-bold color-[rgb(227, 222, 222)]" >{output.label}</h1>
       </div>
       
       <div  >
-        <Webcam
+        <Webcam className="webcame"
           ref={webcamRef}
           mirrored
-          style={{ 
-            
-            width: '100%', 
-            
-            borderRadius: '20px', 
-            border: '4px solid #1960a7',
-            boxShadow: '0 20px 25px -5px rgba(31, 31, 31, 0.1)'
-          }}
         />
        
       </div>
