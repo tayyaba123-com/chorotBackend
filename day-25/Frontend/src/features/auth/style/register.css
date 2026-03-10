@@ -1,0 +1,44 @@
+.register-page {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.register-page .form-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  padding-block: 2rem;
+  border: 1px solid rgb(0, 188, 138);
+  gap: 1rem;
+  border-radius: 0.4rem;
+  padding-inline: 1rem;
+}
+.register-page .form-container h1 {
+  font-size: 2.4rem;
+  text-align: center;
+}
+.register-page .form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.register-page .form-container form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.register-page .form-container form .form-group label {
+  font-size: 1.1em;
+}
+.register-page .form-container form .form-group input {
+  border: 1px solid white;
+  outline: none;
+  border-radius: 0.2rem;
+  padding-inline: 0.3rem;
+  padding-block: 0.3rem;
+}
+.register-page .form-container i {
+  color: rgb(5, 204, 151);
+}/*# sourceMappingURL=register.css.map */
