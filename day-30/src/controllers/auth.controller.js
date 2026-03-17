@@ -1,14 +1,8 @@
-export async function registerUser(req,res,next){
-
- try{
-       throw new Error("had problem in creating the users");
-}catch(error){
-    next(error)
-}
-   
-    
+ async function regitserUser(req,res,next){
+  
+   return res.status(201).json({
+    "message":"User created successfuly"
+   })
 }
 
-
-
-
+export default regitserUser

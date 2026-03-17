@@ -1,6 +1,6 @@
 import express from "express"
 import authRouter from "./routes/auth.route.js"
-import { errorHandler } from "./middleware/error.middleware.js"
+import errorHandler from "./middlewares/err.middleware.js"
 
 const app = express()
 
@@ -8,7 +8,7 @@ app.use(express.json())
 
 app.use("/api/auth",authRouter)
 
-
 app.use(errorHandler)
+
 
 export default app
