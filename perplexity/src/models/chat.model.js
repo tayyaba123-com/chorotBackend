@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const chatSchema = new mongoose.Schema(
+const chatSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -9,11 +9,10 @@ const chatSchema = new mongoose.Schema(
     },
     title: {
       type: String,
-      default: "new chat",
+      default: "New Chat",
       trim: true,
     },
   },
-
   { timestamps: true },
 );
 

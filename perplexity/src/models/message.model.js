@@ -1,25 +1,24 @@
 import mongoose from "mongoose";
 
-const messageSchema = new mongoose.Schema({
+const messageSchema = mongoose.Schema({
     chat:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"chat",
-        required:true
+        ref:"Chat",
+        required:true 
+
     },
     content:{
         type:String,
-        required:true,
-
+        required:[true,"Content is required"],
+        
     },
     role:{
         type:String,
         enum:["user","ai"],
-        default:"user"
+        required:[true,"Role is required"]
     }
-},{
-    timestamps:true
-})
+},{timestamps:true})
 
-const messageModel = mongoose.model("message",messageSchema)
+const messageModel = mongoose.model("Message",messageSchema)    
 
 export default messageModel
