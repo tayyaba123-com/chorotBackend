@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { registerValidator,loginValidator } from "../validators/auth.validator.js";
-import { register,verifyEmail,login,getMe } from "../controllers/auth.controller.js";
+import { register,verifyEmail,login,getMe,resendEmail } from "../controllers/auth.controller.js";
 import { authUser } from "../middlewares/auth.middleware.js";
 
 const authRouter = Router();
@@ -13,6 +13,7 @@ const authRouter = Router();
  * @returns { message, success, user }
  */
 authRouter.post("/register",registerValidator,register)
+
 
 
 /**
@@ -44,6 +45,16 @@ authRouter.get("/get-me",authUser,getMe)
  */
 
 authRouter.get("/verify-email", verifyEmail);
+
+/**
+ * @route POST /api/auth/resend-email
+ * @desc Resend email verification link
+ * @access Public
+ * @body { email }
+ * @returns { message, success } 
+ */
+
+authRouter.post("/resend-email", resendEmail);
 
 
 
