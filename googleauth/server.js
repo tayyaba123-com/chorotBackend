@@ -1,10 +1,14 @@
 import express from 'express';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import morgan from 'morgan';
+
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+app.use(morgan('dev'))
+
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
@@ -21,10 +25,10 @@ passport.use(new GoogleStrategy({
     return done(null,profile);
 }))
 
-app.get("/auth/google",(req,res,next)=>{
-    passport.authenticate("google", { scope: [ "profile", "email" ] })
-})
-
+app.get("/auth/google", passport.authenticate("google", { 
+    scope: ["profile", "email"],
+    prompt: "select_account" // <--- Add this line
+}));
 
 app.get("/auth/google/callback", 
   passport.authenticate("google", { 
@@ -32,7 +36,7 @@ app.get("/auth/google/callback",
     failureRedirect: "/" 
   }), 
   (req, res) => {
-    // This code only runs if authentication succeeds
+  
     console.log(req.user);
     res.send("Google authentication successful!");
   }
