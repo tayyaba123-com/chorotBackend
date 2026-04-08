@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 import userModel from "../models/user.model.js";
-import { sendEmail } from "../services/mail.services.js";
+import { sendEmail } from "../services/mail.service.js";
 import jwt from "jsonwebtoken";
 
 

@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify((error,success)=>{
     if(error){
-        console.log("Error while connecting to email server",error)
+        console.error("Error while connecting to email server",error)
     }
     else{
         console.log("Connected to email server successfully")
@@ -23,7 +23,16 @@ transporter.verify((error,success)=>{
 })
 
 export const sendEmail = async (to,subject,text,html)=>{
+
+    
+  if (!to || !subject || !html) {
+    console.error(" Missing required fields");
+    return "Failed: Missing email fields";
+  }
+
+  
     try {
+        
         const info = await transporter.sendMail({
             from:process.env.GOOGLE_USER,
             to, 

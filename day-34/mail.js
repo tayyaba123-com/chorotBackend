@@ -26,9 +26,9 @@ transporter.verify((error, success) => {
 
 export async function sendEmail({ to, subject, html, text }) {
 
-  console.log("Incoming Email Request:");
-  console.log("To:", to);
-  console.log("Subject:", subject);
+  // console.log("Incoming Email Request:");
+  // console.log("To:", to);
+  // console.log("Subject:", subject);
 
   
   if (!to || !subject || !html) {
