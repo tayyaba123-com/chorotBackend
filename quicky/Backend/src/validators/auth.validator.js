@@ -28,9 +28,8 @@ export  const registerValidation = [
     .isMobilePhone('any').withMessage('Invalid contact number format')
     .matches(/^\d{10}$/).withMessage('Contact number must be 10 digits long'),
 
-    body('role').
-    optional()
-    .isIn(['buyer','seller']).withMessage('Role must be either buyer or seller'),
+    body('isSeller')
+    .isBoolean().withMessage("isSeller must be a boolean value"),
 
     validate
 ]

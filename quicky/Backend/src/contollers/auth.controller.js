@@ -27,7 +27,7 @@ async function sendTokenResponse(user,res,message){
 
 export async function register(req,res){
     
-    const {fullname,email,password,contact} = req.body;
+    const {fullname,email,password,contact,isSeller} = req.body;
 
     try{
     
@@ -48,6 +48,7 @@ export async function register(req,res){
         email,
         password,
         contact,
+        role:isSeller ? "seller": "buyer"
     });
 
 
