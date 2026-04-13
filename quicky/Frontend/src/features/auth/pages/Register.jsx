@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useAuth } from '../hook/useAuth.js';
+import { useNavigate } from 'react-router';
 
 const Register = () => {
+  const { handleRegister } = useAuth()
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     fullname: '',
     email: '',
-    contactNumber: '',
+    contact: '',
     password: '',
   });
+
   const [accountType, setAccountType] = useState('buyer');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registering:', { ...formData, isSeller: accountType === 'supplier' });
+    const payload = { ...formData, isSeller: accountType === 'seller' };
+    await handleRegister({
+      ...payload,
+      isSeller: accountType === 'seller'
+    })
+
+    navigate("/")
   };
 
   return (
@@ -47,7 +59,7 @@ const Register = () => {
           {/* ── Large shopping bag ── */}
           <g transform="translate(140, 130)">
             {/* bag body */}
-            <rect x="0" y="40" width="150" height="130" rx="14" fill="#f97316" />
+            <rect x="0" y="40" width="130" height="130" rx="14" fill="#f97316" />
             {/* bag top strip */}
             <rect x="0" y="40" width="120" height="22" rx="6" fill="#ea580c" />
             {/* bag handle left */}
@@ -55,7 +67,7 @@ const Register = () => {
             {/* bag handle right */}
             <path d="M60 40 Q60 8 75 8 Q90 8 90 40" fill="none" stroke="white" strokeWidth="5" strokeLinecap="round" />
             {/* quicky brand on bag */}
-            <text x="28" y="116" fontFamily="sans-serif" fontWeight="800" fontSize="17" fill="white" letterSpacing="1">Trending</text>
+            <text x="24" y="116" fontFamily="sans-serif" fontWeight="800" fontSize="17" fill="white" letterSpacing="1">Trending</text>
             {/* shine */}
             <ellipse cx="90" cy="70" rx="10" ry="6" fill="white" opacity="0.18" transform="rotate(-30 90 70)" />
           </g>
@@ -66,7 +78,7 @@ const Register = () => {
             <rect x="0" y="26" width="76" height="14" rx="5" fill="#f59e0b" />
             <path d="M18 26 Q18 5 28 5 Q38 5 38 26" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" />
             <path d="M38 26 Q38 5 48 5 Q58 5 58 26" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" />
-            <text x="10" y="80" fontFamily="sans-serif" fontWeight="800" fontSize="10" fill="white" letterSpacing="0.5">Quality</text>
+            <text x="15" y="80" fontFamily="sans-serif" fontWeight="800" fontSize="10" fill="white" letterSpacing="0.5">Quality</text>
           </g>
 
           {/* ── Clothing tag ── */}
@@ -159,13 +171,13 @@ const Register = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setAccountType('supplier')}
-                className={`w-1/2 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${accountType === 'supplier'
+                onClick={() => setAccountType('seller')}
+                className={`w-1/2 py-2.5 text-sm font-bold rounded-lg transition-all duration-300 ${accountType === 'seller'
                   ? 'bg-white text-orange-600 shadow-sm border border-slate-200'
                   : 'text-slate-500 hover:text-slate-700'
                   }`}
               >
-                Supplier
+                Seller
               </button>
             </div>
 
@@ -213,16 +225,16 @@ const Register = () => {
               <div className="relative">
                 <input
                   type="tel"
-                  id="contactNumber"
-                  name="contactNumber"
-                  value={formData.contactNumber}
+                  id="contact"
+                  name="contact"
+                  value={formData.contact}
                   onChange={handleChange}
                   className="block px-3.5 pb-2.5 pt-4 w-full text-sm text-slate-800 bg-transparent rounded-xl border-2 border-slate-200 appearance-none focus:outline-none focus:ring-0 focus:border-orange-500 peer transition-colors"
                   placeholder=" "
                   required
                 />
                 <label
-                  htmlFor="contactNumber"
+                  htmlFor="contact"
                   className="absolute text-sm font-medium text-slate-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-orange-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-2"
                 >
                   Contact Number
@@ -294,7 +306,7 @@ const Register = () => {
 
           </div>
 
-          <p className="text-center text-sm text-slate-500 mt-8">
+          <p className="text-center text-sm text-slate-500 mt-8" >
             Already have an account? <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Log in</a>
           </p>
 

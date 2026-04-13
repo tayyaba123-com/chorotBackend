@@ -34,4 +34,17 @@ export  const registerValidation = [
     validate
 ]
 
+export const loginValidation = [
+    body("email")
+    .isEmail().withMessage("Invalid Email formate")
+    .notEmpty().withMessage("Email is required"),
+
+    body("password")
+     .notEmpty().withMessage('Password is required')
+    .isLength({min:6}).withMessage('Password must be at least 6 characters long')
+    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/).withMessage('Password must contain at least one letter and one number'),
+
+    validate
+]
+
 
