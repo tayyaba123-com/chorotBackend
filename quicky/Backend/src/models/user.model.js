@@ -16,13 +16,15 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true,
+        required:function(){
+            return !this.googleId
+        },
         select:false,
         trim:true,
     },
     contact:{
         type:String,
-        required:true,
+        required:false, //Will correct it soon
         trim:true,
     },
     role:{
@@ -31,7 +33,9 @@ const userSchema = new mongoose.Schema({
         default:"buyer",
         trim:true,
     },
-
+    googleId:{
+        type:String
+    }
 })
 
 userSchema.pre('save',async function(){
