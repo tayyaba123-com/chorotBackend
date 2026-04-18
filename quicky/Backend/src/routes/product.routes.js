@@ -1,8 +1,22 @@
-import {Router} from 'express';
+import { Router } from 'express';
+import { authenticateSeller } from '../middlewares/auth.middleware.js';
+import { createProduct } from '../contollers/product.controller.js';
+import { createProductValidationRules } from '../validators/product.validator.js';
+import multer from 'multer';
 
-const ProductRouter = Router();
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 } //5MB
+    
+});
+
+const productRouter = Router();
 
 
 
+productRouter.post("/", authenticateSeller, upload.array('images', 7), createProduct)
 
-export default ProductRouter;
+
+export default productRouter;
+
+

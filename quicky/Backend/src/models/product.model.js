@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose"
+import mongoose from "mongoose"
 
 const productSchema = new mongoose.Schema({
     title: {
@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
             required: true
         },
         currency: {
-            type: Number,
+            type: String,
             enum: ["USD", "EUR", "GBP", "PKR", "INR", "JPY"],
             default: "PKR"
         }
@@ -25,13 +25,9 @@ const productSchema = new mongoose.Schema({
         ref: 'user',
         required: true
     },
-    image: [
+    images: [
         {
             url:{
-                type: String,
-                required: true,
-            },
-            alt:{
                 type: String,
                 required: true,
             }

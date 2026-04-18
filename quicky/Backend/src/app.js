@@ -43,6 +43,10 @@ passport.use(new GoogleStrategy({
 
 
 app.use('/api/auth',authRouter);
- 
+
+/**
+ * Routes Product
+ */
+app.use('/api/products', productRouter);
 
 export default app;
