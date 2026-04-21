@@ -6,9 +6,9 @@ export const useProduct = () => {
 
     const dispatch = useDispatch()
 
-    async function handleCreateProduct({ title, description, priceAmount, priceCurrency, image }) {
+    async function handleCreateProduct({ title, description, priceAmount, priceCurrency, images = [] }) {
 
-        const data = await createProduct({ title, description, priceAmount, priceCurrency, images: [image] })
+        const data = await createProduct({ title, description, priceAmount, priceCurrency, images })
 
         return data.product
 
