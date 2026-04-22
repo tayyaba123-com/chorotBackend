@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { authenticateSeller } from '../middlewares/auth.middleware.js';
 import { createProduct ,getSellerProducts } from '../contollers/product.controller.js';
 import { createProductValidationRules } from '../validators/product.validator.js';
+
 import multer from 'multer';
 
 const upload = multer({

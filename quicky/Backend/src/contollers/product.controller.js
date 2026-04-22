@@ -5,8 +5,8 @@ export async function createProduct(req, res) {
 
     const { title, description, priceAmount, priceCurrency } = req.body;
     const user = req.user;
-    console.log(req.files)
-    
+  
+  
 
 
     const images = await Promise.all(req.files.map(async (file) => {

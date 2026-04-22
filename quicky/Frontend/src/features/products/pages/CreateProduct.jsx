@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { useProduct } from '../hooks/useProduct'
 import { useNavigate } from 'react-router'
 
-const CURRENCIES = ['USD', 'PKR', 'EUR', 'GBP', 'AED', 'SAR', 'INR']
+const CURRENCIES = ["USD", "EUR", "GBP", "PKR", "INR", "JPY"]
 const MAX_IMAGES = 7
 
 // Floating label input — matches Login/Register style exactly
@@ -28,31 +28,86 @@ const FloatingInput = ({ id, name, type = 'text', value, onChange, label, requir
     </div>
 )
 
-// Individual image slot
+// Individual image slot — supports click AND drag-and-drop
 const ImageSlot = ({ index, file, onAdd, onRemove }) => {
     const inputRef = useRef(null)
+    const [isDragOver, setIsDragOver] = useState(false)
+
+    const handleDragOver = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        if (!file) setIsDragOver(true)
+    }
+
+    const handleDragLeave = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setIsDragOver(false)
+    }
+
+    const handleDrop = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        setIsDragOver(false)
+        if (file) return // slot already filled
+        const droppedFile = e.dataTransfer.files?.[0]
+        if (droppedFile && droppedFile.type.startsWith('image/')) {
+            onAdd(index, droppedFile)
+        }
+    }
 
     if (file) {
         return (
-            <div className="relative group aspect-square rounded-2xl overflow-hidden border-2 border-slate-200 shadow-sm">
+            <div
+                className={`relative group aspect-square rounded-2xl overflow-hidden border-2 shadow-sm transition-all duration-200
+                    ${isDragOver
+                        ? 'border-orange-500 scale-[1.03] shadow-md shadow-orange-200'
+                        : 'border-slate-200'
+                    }`}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setIsDragOver(false)
+                    const droppedFile = e.dataTransfer.files?.[0]
+                    if (droppedFile && droppedFile.type.startsWith('image/')) {
+                        onAdd(index, droppedFile)
+                    }
+                }}
+            >
                 <img
                     src={URL.createObjectURL(file)}
                     alt={`Product image ${index + 1}`}
                     className="w-full h-full object-cover"
                 />
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                    <button
-                        type="button"
-                        onClick={() => onRemove(index)}
-                        className="p-2 bg-white/90 rounded-full text-red-500 hover:bg-white transition-colors shadow-md"
-                        title="Remove image"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+
+                {/* Drag-over replace overlay */}
+                {isDragOver && (
+                    <div className="absolute inset-0 bg-orange-500/70 flex flex-col items-center justify-center gap-1 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-white animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                         </svg>
-                    </button>
-                </div>
+                        <span className="text-[10px] font-bold text-white">Replace</span>
+                    </div>
+                )}
+
+                {/* Hover remove overlay (hidden while dragging) */}
+                {!isDragOver && (
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                        <button
+                            type="button"
+                            onClick={() => onRemove(index)}
+                            className="p-2 bg-white/90 rounded-full text-red-500 hover:bg-white transition-colors shadow-md"
+                            title="Remove image"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                )}
+
                 {/* Slot number badge */}
                 <span className="absolute top-1.5 left-1.5 text-[10px] font-bold text-white bg-black/50 rounded-md px-1.5 py-0.5">
                     {index + 1}
@@ -73,12 +128,27 @@ const ImageSlot = ({ index, file, onAdd, onRemove }) => {
             <button
                 type="button"
                 onClick={() => inputRef.current?.click()}
-                className="aspect-square rounded-2xl border-2 border-dashed border-slate-300 hover:border-orange-400 hover:bg-orange-50/40 transition-all duration-200 flex flex-col items-center justify-center gap-1.5 text-slate-400 hover:text-orange-500 group"
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`aspect-square rounded-2xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-1.5 group
+                    ${isDragOver
+                        ? 'border-orange-500 bg-orange-50 text-orange-500 scale-[1.03] shadow-md shadow-orange-200'
+                        : 'border-slate-300 hover:border-orange-400 hover:bg-orange-50/40 text-slate-400 hover:text-orange-500'
+                    }`}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 transition-transform group-hover:scale-110 duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                </svg>
-                <span className="text-[10px] font-semibold leading-none">{index === 0 ? 'Cover' : `Photo ${index + 1}`}</span>
+                {isDragOver ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>
+                ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 transition-transform group-hover:scale-110 duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                )}
+                <span className="text-[10px] font-semibold leading-none">
+                    {isDragOver ? 'Drop here' : (index === 0 ? 'Cover' : `Photo ${index + 1}`)}
+                </span>
             </button>
         </>
     )
@@ -98,6 +168,7 @@ const CreateProduct = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState('')
 
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
@@ -114,6 +185,7 @@ const CreateProduct = () => {
         setImages(updated)
     }
 
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError('')
@@ -124,10 +196,13 @@ const CreateProduct = () => {
             return
         }
 
+
+
         try {
             setIsSubmitting(true)
             await handleCreateProduct({
                 ...formData,
+
                 images: filledImages,
             })
             navigate('/')
@@ -260,7 +335,7 @@ const CreateProduct = () => {
 
                             <p className="text-xs text-slate-400">First photo will be the cover. Up to {MAX_IMAGES} photos.</p>
 
-                            {/* Grid */}
+                            {/* Grid of individual slots */}
                             <div className="grid grid-cols-4 gap-3">
                                 {images.map((file, i) => (
                                     <ImageSlot
