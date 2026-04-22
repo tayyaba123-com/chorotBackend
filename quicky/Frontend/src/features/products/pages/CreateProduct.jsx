@@ -200,11 +200,18 @@ const CreateProduct = () => {
 
         try {
             setIsSubmitting(true)
-            await handleCreateProduct({
-                ...formData,
 
-                images: filledImages,
+            const data = new FormData()
+            data.append('title', formData.title)
+            data.append('description', formData.description)
+            data.append('priceAmount', formData.priceAmount)
+            data.append('priceCurrency', formData.priceCurrency)
+
+            filledImages.forEach((image) => {
+                data.append('images', image)
             })
+
+            await handleCreateProduct(data)
             navigate('/')
         } catch (err) {
             setError(err?.response?.data?.message || 'Something went wrong. Please try again.')

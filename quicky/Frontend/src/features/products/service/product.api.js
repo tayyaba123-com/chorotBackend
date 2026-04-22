@@ -6,17 +6,7 @@ const productApiInstance = axios.create({
 })
 
 
-export async function createProduct({ title, description, priceAmount, priceCurrency, images }) {
-    console.log(images)
-
-    const formData = new FormData()
-    formData.append("title", title)
-    formData.append("description", description)
-    formData.append("priceAmount", priceAmount)
-    formData.append("priceCurrency", priceCurrency)
-    for (const image of images) {
-        formData.append("images", image)
-    }
+export async function createProduct(formData) {
 
     const responce = await productApiInstance.post("/", formData)
 
