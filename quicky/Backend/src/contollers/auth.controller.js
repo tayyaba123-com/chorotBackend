@@ -63,6 +63,7 @@ export const register = async (req, res) => {
             {
                 message: "Internal server error",
                 success: false,
+                error: error.message
             }
         );
     }
@@ -102,7 +103,8 @@ export const login = async (req, res) => {
         console.log(error)
         return res.status(500).json({
             message: "Internal Server error",
-            success: false
+            success: false,
+            error: error.message
         })
     }
 

@@ -211,6 +211,7 @@ const CreateProduct = () => {
                 data.append('images', image)
             })
 
+
             await handleCreateProduct(data)
             navigate('/')
         } catch (err) {

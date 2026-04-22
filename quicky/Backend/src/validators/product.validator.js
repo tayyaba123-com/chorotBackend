@@ -13,7 +13,7 @@ function validateRequest(req, res, next) {
     next();
 
 }
-export const createProductValidationRules = [
+export const createProductValidation = [
     body("title").notEmpty().withMessage("Title is required"),
     body("description").notEmpty().withMessage("Description is required"),
     body("priceAmount").notEmpty().withMessage("Price amount is required").isNumeric().withMessage("Price amount must be a number"),

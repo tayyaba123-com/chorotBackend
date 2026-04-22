@@ -13,7 +13,7 @@ import { config } from '../config/config.js';
  * @access Public
  * 
  */
-authRouter.post("/register", register);
+authRouter.post("/register",registerValidation, register);
 
 
 /**
