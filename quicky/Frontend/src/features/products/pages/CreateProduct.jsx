@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react'
 import { useProduct } from '../hooks/useProduct'
 import { useNavigate } from 'react-router'
+// import { useAuth } from '../../auth/hook/useAuth'
+
 
 const CURRENCIES = ["USD", "EUR", "GBP", "PKR", "INR", "JPY"]
 const MAX_IMAGES = 7
@@ -156,13 +158,15 @@ const ImageSlot = ({ index, file, onAdd, onRemove }) => {
 
 const CreateProduct = () => {
     const { handleCreateProduct } = useProduct()
+    // const { handleRegister } = useAuth()
+    // console.log(handleRegister.is)
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         priceAmount: '',
-        priceCurrency: 'USD',
+        priceCurrency: 'PKR',
     })
     const [images, setImages] = useState(Array(MAX_IMAGES).fill(null))
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -395,6 +399,7 @@ const CreateProduct = () => {
                 </p>
             </div>
         </div>
+
     )
 }
 

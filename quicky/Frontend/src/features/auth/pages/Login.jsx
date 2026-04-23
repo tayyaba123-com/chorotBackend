@@ -1,4 +1,3 @@
-import React, { use } from 'react'
 import { useState } from 'react'
 import { useAuth } from '../hook/useAuth'
 import { useNavigate, Link } from 'react-router'
@@ -25,6 +24,7 @@ const Login = () => {
         navigate("/")
 
     }
+
 
 
     return (
