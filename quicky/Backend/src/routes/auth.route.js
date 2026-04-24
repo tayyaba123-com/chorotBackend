@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import {registerValidation,loginValidation} from '../validators/auth.validator.js';
-import {register,login , googleCallBack} from '../contollers/auth.controller.js';
+import {register,login , googleCallBack,getMe} from '../contollers/auth.controller.js';
+import {authenticateUser} from "../middlewares/auth.middleware.js"
 import passport from 'passport'
 const authRouter = Router();
 import { config } from '../config/config.js';
@@ -23,6 +24,14 @@ authRouter.post("/register",registerValidation, register);
  */
 
 authRouter.post("/login",loginValidation,login)
+
+/**
+ * @route GET /auth/get-me
+ * @desc Get the authenticated user's information
+ * @access Private
+ */
+
+authRouter.get("/get-user",authenticateUser,getMe)
 
 
 authRouter.get("/google",

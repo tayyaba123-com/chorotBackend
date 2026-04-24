@@ -1,6 +1,9 @@
 import { useState, useRef } from 'react'
 import { useProduct } from '../hooks/useProduct'
 import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux';
+
+
 // import { useAuth } from '../../auth/hook/useAuth'
 
 
@@ -158,8 +161,7 @@ const ImageSlot = ({ index, file, onAdd, onRemove }) => {
 
 const CreateProduct = () => {
     const { handleCreateProduct } = useProduct()
-    // const { handleRegister } = useAuth()
-    // console.log(handleRegister.is)
+
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({

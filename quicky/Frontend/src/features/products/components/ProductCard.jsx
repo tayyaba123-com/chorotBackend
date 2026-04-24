@@ -2,6 +2,7 @@ import { useState } from "react"
 
 
 const ProductCard = ({ product }) => {
+
     const { title, description, price, images } = product
     const [currentIndex, setCurrentIndex] = useState(0)
 

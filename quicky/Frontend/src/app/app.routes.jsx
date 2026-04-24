@@ -18,12 +18,18 @@ export const routes = createBrowserRouter([
         element: <Login />
     },
     {
-        path: "/seller/create-product",
-        element: <CreateProduct />
-    },
-    {
-
-        path: "/seller/view-products",
-        element: <ViewProducts />
+        path: "/seller",
+        children: [
+            {
+                path: "/seller/create-product",
+                element: <CreateProduct />
+            },
+            {
+                path: "/seller/view-products",
+                element: <ViewProducts />
+            }
+        ]
     }
 ])
+
+

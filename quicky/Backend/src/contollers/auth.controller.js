@@ -137,3 +137,13 @@ export const googleCallBack = async (req, res) => {
     res.redirect("http://localhost:5173/")
 }
 
+
+export const getMe = async(req,res)=>{
+    const user = req.user
+
+    return res.status(200).json({
+        message:"Got user successfuly",
+        success:true,
+        user
+    })
+}
