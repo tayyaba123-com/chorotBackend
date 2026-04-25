@@ -20,3 +20,10 @@ export async function getSellerProducts() {
 
     return responce.data;
 }
+
+export async function getAllProducts() {
+
+    const responce = await productApiInstance.get("/")
+
+    return responce.data
+}

@@ -24,12 +24,17 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = { ...formData, isSeller: accountType === 'seller' };
-    await handleRegister({
+    const user = await handleRegister({
       ...payload,
       isSeller: accountType === 'seller'
     })
+    if (user.role === "seller") {
+      navigate("/seller/view-products")
+    }
+    else {
+      navigate("/")
+    }
 
-    navigate("/")
   };
 
   return (

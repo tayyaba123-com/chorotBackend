@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { authenticateSeller } from '../middlewares/auth.middleware.js';
-import { createProduct ,getSellerProducts } from '../contollers/product.controller.js';
+import { createProduct ,getSellerProducts , getAllProducts} from '../contollers/product.controller.js';
 import { createProductValidation } from '../validators/product.validator.js';
 
 import multer from 'multer';
@@ -22,7 +22,21 @@ const productRouter = Router();
 
 productRouter.post("/", authenticateSeller, upload.array('images', 7),createProductValidation, createProduct)
 
+/**
+ * @route Get /api/products/seller
+ * @desc Returs All product of requested seller
+ * @access Private (Seller only)
+ */
+
 productRouter.get("/seller",authenticateSeller,getSellerProducts)
+
+/**
+ * @route Get /api/products/
+ * @desc Gets all products
+ * @access Publics
+ */
+
+productRouter.get("/",getAllProducts)
 
 
 export default productRouter;

@@ -142,8 +142,15 @@ export const getMe = async(req,res)=>{
     const user = req.user
 
     return res.status(200).json({
-        message:"Got user successfuly",
+        message:"User fetched successfuly",
         success:true,
-        user
+        user:{
+            fullname:user.fullname,
+            email:user.email,
+            contact:user.contact,
+            role:user.role,
+            id:user._id
+
+        }
     })
 }

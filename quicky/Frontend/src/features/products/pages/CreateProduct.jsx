@@ -162,6 +162,8 @@ const ImageSlot = ({ index, file, onAdd, onRemove }) => {
 const CreateProduct = () => {
     const { handleCreateProduct } = useProduct()
 
+    const user = useSelector((state) => state.auth.user)
+    console.log(user)
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({

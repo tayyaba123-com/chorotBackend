@@ -31,7 +31,7 @@ authRouter.post("/login",loginValidation,login)
  * @access Private
  */
 
-authRouter.get("/get-user",authenticateUser,getMe)
+authRouter.get("/user",authenticateUser,getMe)
 
 
 authRouter.get("/google",

@@ -3,7 +3,7 @@ import { useAuth } from '../hook/useAuth'
 import { useNavigate, Link } from 'react-router'
 import ContinueWithGoogle from '../components/ContinueWithGoogle'
 import LeftPanel from '../components/LeftPanel'
-import { useSelector } from 'react-redux';
+
 
 const Login = () => {
 
@@ -21,8 +21,14 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const payload = { ...formData }
-        await handleLogin(payload)
-        navigate("/")
+        const user = await handleLogin(payload)
+        if (user.role === "seller") {
+            navigate("/seller/view-products")
+        }
+        else {
+            navigate("/")
+        }
+
 
     }
 
