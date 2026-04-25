@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 
 const HomeProductCard = ({ product }) => {
     const [currentIndex, setCurrentIndex] = useState(0)
+    console.log(product)
 
     const nextImage = (e) => {
         e.preventDefault()
@@ -93,7 +94,7 @@ const HomeProductCard = ({ product }) => {
                 <a href={`/product/${product._id}`} className="absolute inset-x-4 bottom-4 translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-30">
                     <button className="w-full bg-white/95 backdrop-blur text-slate-900 py-3 rounded-xl font-bold shadow-lg hover:bg-[#f97316] hover:text-white transition-colors flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                        Add to Cart
+                        View Details
                     </button>
                 </a>
             </div>

@@ -30,7 +30,7 @@ export const useProduct = () => {
 
         const data = await getProductById(id)
 
-        dispatch(setCurrentProduct(data.currentProduct))
+        dispatch(setCurrentProduct(data.product))
     }
     return { handleCreateProduct, handleGetSellerProducts, handleGetAllProducts, handleGetProductById }
 }
