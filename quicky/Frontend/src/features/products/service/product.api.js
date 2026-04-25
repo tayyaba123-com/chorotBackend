@@ -27,3 +27,10 @@ export async function getAllProducts() {
 
     return responce.data
 }
+
+export async function getProductById(id) {
+
+    const responce = await productApiInstance.get(`/${id}`)
+
+    return responce.data
+}
