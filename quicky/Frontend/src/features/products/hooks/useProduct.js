@@ -32,5 +32,6 @@ export const useProduct = () => {
 
         dispatch(setCurrentProduct(data.product))
     }
+
     return { handleCreateProduct, handleGetSellerProducts, handleGetAllProducts, handleGetProductById }
 }
