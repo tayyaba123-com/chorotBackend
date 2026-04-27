@@ -30,7 +30,7 @@ export async function getAllProducts() {
 
 export async function getProductById(id) {
 
-    const responce = await productApiInstance.get(`/${id}`)
+    const responce = await productApiInstance.get(`/details/${id}`)
 
     return responce.data
 }

@@ -33,12 +33,18 @@ productRouter.get("/seller",authenticateSeller,getSellerProducts)
 /**
  * @route Get /api/products/
  * @desc Gets all products
- * @access Publics
+ * @access Public
  */
 
 productRouter.get("/",getAllProducts)
 
-productRouter.get("/:id",getProductById)
+/**
+ * @route Get /api/products/details/:id
+ * @desc Gets A single Products Detail
+ * @access Public
+ */
+
+productRouter.get("/details/:id",getProductById)
 
 
 export default productRouter;
